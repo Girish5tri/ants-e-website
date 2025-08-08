@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnTS-E - Automated Technical Support Enterprise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: #000000;
+            color: #f5f5f7;
+            line-height: 1.47059;
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+
+        /* Clean Apple-inspired background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #000000;
+        }
+
+        /* Navigation - Apple Style */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 0;
+            height: 44px;
+        }
+
+        .nav-container {
+            max-width: 1024px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 22px;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            color: #f5f5f7;
+            letter-spacing: -0.022em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #f5f5f7;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            padding: 8px 12px;
+            font-size: 17px;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            opacity: 0.8;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+        }
+
+        .nav-link.active {
+            opacity: 1;
+            color: #06c;
+        }
+
+        /* Hero Section - Apple Style */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 44px 22px 0;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 80px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            color: #f5f5f7;
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            font-weight: 400;
+            letter-spacing: 0.007em;
+            line-height: 1.14286;
+            color: #a1a1a6;
+            margin-bottom: 40px;
+            max-width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 980px;
+            font-size: 17px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 144px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #06c;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #06c;
+            border: 1px solid #06c;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        /* Services Section - Compact Layout */
+        .services {
+            padding: 60px 22px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Show all services without tabs initially */
+        .all-services-view {
+            display: block;
+            margin-bottom: 40px;
+        }
+
+        .all-services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .service-category {
+            margin-bottom: 32px;
+        }
+
+        .category-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #f5f5f7;
+            margin-bottom: 16px;
+            text-align: center;
+            letter-spacing: -0.01em;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 56px;
+            font-weight: 600;
+            letter-spacing: -0.005em;
+            line-height: 1.07143;
+            margin-bottom: 20px;
+            color: #f5f5f7;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 400;
+            letter-spacing: 0.007em;
+            line-height: 1.14286;
+            color: #a1a1a6;
+            margin-bottom: 80px;
+            max-width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .service-card {
+            background: #161617;
+            border: 1px solid #424245;
+            border-radius: 18px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: scale(1.02);
+            border-color: #06c;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .service-title {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.009em;
+            line-height: 1.16667;
+            margin-bottom: 12px;
+            color: #f5f5f7;
+        }
+
+        .service-description {
+            color: #a1a1a6;
+            line-height: 1.47059;
+            font-size: 17px;
+            margin-bottom: 20px;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .service-features li {
+            color: #a1a1a6;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+            font-size: 14px;
+            line-height: 1.42857;
+        }
+
+        .service-features li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #06c;
+        }
+
+        .service-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(6, 204, 0, 0.1);
+            border: 1px solid rgba(6, 204, 0, 0.2);
+            border-radius: 12px;
+            font-size: 14px;
+            color: #30d158;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #30d158;
+        }
+
+        /* Tab Navigation - Oval Design */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 60px;
+            gap: 12px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: #1d1d1f;
+            border: 1px solid #424245;
+            color: #a1a1a6;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: -0.016em;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .tab:hover:not(.active) {
+            background: #2d2d30;
+            color: #f5f5f7;
+            border-color: #06c;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* AI Chat Section */
+        .ai-chat {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 4rem 0;
+            backdrop-filter: blur(20px);
+        }
+
+        /* Floating AI Assistant - Apple Style */
+        .floating-ai-assistant {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 380px;
+            max-height: 480px;
+            background: rgba(28, 28, 30, 0.8);
+            border: 1px solid #424245;
+            border-radius: 16px;
+            backdrop-filter: saturate(180%) blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .floating-ai-assistant.minimized {
+            height: 60px;
+            overflow: hidden;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .ai-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #06c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-right: 12px;
+        }
+
+        .ai-info h4 {
+            color: #f5f5f7;
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            letter-spacing: -0.022em;
+        }
+
+        .ai-info p {
+            color: #a1a1a6;
+            font-size: 14px;
+        }
+
+        .ai-controls {
+            display: flex;
+            gap: 4px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #a1a1a6;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #f5f5f7;
+        }
+
+        .close-btn:hover {
+            background: #ff3b30;
+            color: white;
+        }
+
+        .ai-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 250px;
+            min-height: 150px;
+        }
+
+        .ai-message {
+            background: #1d1d1f;
+            border: 1px solid #424245;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
+            color: #f5f5f7;
+            font-size: 14px;
+            line-height: 1.42857;
+        }
+
+        .ai-typing {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            padding: 0.5rem 0;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .typing-dot {
+            width: 4px;
+            height: 4px;
+            background: #06c;
+            border-radius: 50%;
+            animation: typingDots 1.5s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingDots {
+            0%, 60%, 100% { opacity: 0.3; }
+            30% { opacity: 1; }
+        }
+
+        .ai-quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0 1rem;
+        }
+
+        .ai-quick-btn {
+            background: #1d1d1f;
+            border: 1px solid #424245;
+            color: #f5f5f7;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ai-quick-btn:hover {
+            background: #06c;
+            border-color: #06c;
+        }
+
+        .ai-input-container {
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ai-input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .ai-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 0.6rem;
+            color: white;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .ai-input:focus {
+            border-color: #06c;
+            box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+        }
+
+        .ai-send-btn {
+            background: #06c;
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            min-width: 36px;
+        }
+
+        .ai-send-btn:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .floating-ai-assistant {
+                width: calc(100% - 32px);
+                right: 16px;
+                left: 16px;
+                bottom: 16px;
+            }
+            
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .hero-subtitle {
+                font-size: 21px;
+                max-width: 90%;
+            }
+            
+            .section-title {
+                font-size: 40px;
+            }
+            
+            .section-subtitle {
+                font-size: 21px;
+                max-width: 90%;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                gap: 4px;
+                max-width: 100%;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #7835ff, #ff3599);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .chat-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .chat-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #7835ff;
+            box-shadow: 0 0 20px rgba(120, 53, 255, 0.3);
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .tabs {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .chat-input-container {
+                flex-direction: column;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Clean Background -->
+    <div class="background-animation"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo">🤖 AnTS-E</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#integrations" class="nav-link">Integrations</a></li>
+                <li><button class="nav-link" onclick="showAIAssistant();" style="background: none; border: none; cursor: pointer;">AI Assistant</button></li>
+                <li><a href="#analytics" class="nav-link">Analytics</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content fade-in">
+            <h1 class="hero-title">AnTS-E Platform</h1>
+            <p class="hero-subtitle">
+                Automated Technical Support Enterprise with AI-powered integration services, 
+                smart ticketing systems, and seamless data synchronization across Red Hat ecosystem
+            </p>
+            <div class="hero-buttons">
+                <a href="#services" class="btn btn-primary">View All Services</a>
+                <button class="btn btn-secondary" onclick="showAIAssistant();">Ask AI Assistant</button>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2 class="section-title fade-in">AnTS-E Service Portfolio</h2>
+        <p class="section-subtitle fade-in">
+            Production-ready automation tools, AI assistants, and enterprise integrations for Red Hat infrastructure
+        </p>
+
+
+
+        <!-- Tab Navigation -->
+        <div class="tabs fade-in">
+            <button class="tab active" onclick="showTab('tools-integrations')">Sync Tools</button>
+            <button class="tab" onclick="showTab('core-services')">Data Integration</button>
+            <button class="tab" onclick="showTab('ai-powered')">AI Services</button>
+            <button class="tab" onclick="showTab('support-systems')">Service Desk</button>
+            <button class="tab" onclick="showTab('integrations')">App Store</button>
+        </div>
+
+        <!-- Data Integration Tab -->
+        <div id="core-services" class="tab-content">
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <span class="service-icon">📊</span>
+                    <h3 class="service-title">Priority Management Platform</h3>
+                    <p class="service-description">
+                        Platform that helps teams figure out their daily priorities across JIRA, AppGmail, Slack, and other tools.
+                    </p>
+                    <ul class="service-features">
+                        <li>Cross-platform task aggregation</li>
+                        <li>Intelligent priority scoring</li>
+                        <li>Daily workflow optimization</li>
+                        <li>Real-time task synchronization</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Active
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🔄</span>
+                    <h3 class="service-title">MCP Integration Engine</h3>
+                    <p class="service-description">
+                        MCP servers enabling seamless data integration across platforms with adaptive cross-syncing capabilities.
+                    </p>
+                    <ul class="service-features">
+                        <li>Message Control Protocol servers</li>
+                        <li>Adaptive integration platform</li>
+                        <li>Cross-platform data synchronization</li>
+                        <li>Enterprise-grade reliability</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Production
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🎯</span>
+                    <h3 class="service-title">Data Reporting Interface</h3>
+                    <p class="service-description">
+                        Easy data reporting where users can treat it like a buffet (explore freely) or order off the menu (structured reports).
+                    </p>
+                    <ul class="service-features">
+                        <li>Self-service data exploration</li>
+                        <li>Pre-built report templates</li>
+                        <li>Interactive data visualization</li>
+                        <li>Custom dashboard creation</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Enhanced
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Services Tab -->
+        <div id="ai-powered" class="tab-content">
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <span class="service-icon">🤖</span>
+                    <h3 class="service-title">AI Chatbot Service</h3>
+                    <p class="service-description">
+                        Single AI chatbot capable of answering questions related to all services, connected through data pipelines and integration mechanisms.
+                    </p>
+                    <ul class="service-features">
+                        <li>Multi-service knowledge base</li>
+                        <li>Natural language processing</li>
+                        <li>Context-aware responses</li>
+                        <li>Service-specific guidance</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Beta Testing
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🧠</span>
+                    <h3 class="service-title">Vectorized Context Middleware</h3>
+                    <p class="service-description">
+                        Middleware that provides vectorized context of data so we can use with any AI integration across platforms.
+                    </p>
+                    <ul class="service-features">
+                        <li>Vector data processing</li>
+                        <li>AI-ready data formatting</li>
+                        <li>Context preservation</li>
+                        <li>Multi-platform compatibility</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Research Phase
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">❄️</span>
+                    <h3 class="service-title">Snowflake Cortex AI</h3>
+                    <p class="service-description">
+                        Snowflake Cortex AI processing and Streamlit frontend with intuitive chat interface for advanced data analytics.
+                    </p>
+                    <ul class="service-features">
+                        <li>Cortex AI processing engine</li>
+                        <li>Streamlit web interface</li>
+                        <li>Intuitive chat interface</li>
+                        <li>Real-time data analytics</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Beta Testing
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🎯</span>
+                    <h3 class="service-title">AI Workflow Orchestrator</h3>
+                    <p class="service-description">
+                        Tell the platform what you want in plain English and it automatically sets up workflows across all your tools - no coding required.
+                    </p>
+                    <ul class="service-features">
+                        <li>Natural language workflow builder</li>
+                        <li>Cross-tool automation (Jira ↔ Slack ↔ GitHub ↔ Email)</li>
+                        <li>Smart task prioritization and scheduling</li>
+                        <li>Automated triage and routing</li>
+                        <li>Predictive analytics and reporting</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        In Development
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Desk Tab -->
+        <div id="support-systems" class="tab-content">
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <span class="service-icon">🎧</span>
+                    <h3 class="service-title">AI Service Desk Agent (Rovo)</h3>
+                    <p class="service-description">
+                        AI service desk agent using Rovo to answer PLM tickets and move them to the correct projects automatically.
+                    </p>
+                    <ul class="service-features">
+                        <li>Automated PLM ticket responses</li>
+                        <li>Smart project routing</li>
+                        <li>Rovo AI integration</li>
+                        <li>24/7 ticket processing</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        In Testing
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🧠</span>
+                    <h3 class="service-title">Knowledge Assistance</h3>
+                    <p class="service-description">
+                        Knowledge assistance that gives people answers they need for reporting, JIRA, Confluence, Prod Pages, PXPRIO, Bugzilla.
+                    </p>
+                    <ul class="service-features">
+                        <li>Multi-platform knowledge base</li>
+                        <li>Instant answer retrieval</li>
+                        <li>Reporting assistance</li>
+                        <li>Tool-specific guidance</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Production Ready
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🎫</span>
+                    <h3 class="service-title">Internal Ticketing System (SMP)</h3>
+                    <p class="service-description">
+                        Internal ticketing system (SMP) with smart routing to determine appropriate teams automatically.
+                    </p>
+                    <ul class="service-features">
+                        <li>Smart team routing</li>
+                        <li>Automated team assignment</li>
+                        <li>SMP integration</li>
+                        <li>Ticket performance tracking</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Fully Operational
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🤖</span>
+                    <h3 class="service-title">AI Ticket Responder</h3>
+                    <p class="service-description">
+                        AI ticket responder to answer users' questions automatically and provide instant support.
+                    </p>
+                    <ul class="service-features">
+                        <li>Automated user responses</li>
+                        <li>Instant question answering</li>
+                        <li>24/7 support availability</li>
+                        <li>Smart escalation handling</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Enhanced
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sync Tools Tab -->
+        <div id="tools-integrations" class="tab-content active">
+            <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+                <h3 style="color: #f5f5f7; font-size: 24px; margin-bottom: 0.5rem;">🔗 Synchronization Tools</h3>
+                <p style="color: #a1a1a6; font-size: 17px;">Direct access to specific sync tools and platform integrations</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <span class="service-icon">🤖</span>
+                    <h3 class="service-title">Watson Integration</h3>
+                    <p class="service-description">
+                        IBM Watson AI integration for advanced natural language processing and intelligent automation within the Red Hat ecosystem.
+                    </p>
+                    <ul class="service-features">
+                        <li>Natural language understanding</li>
+                        <li>Automated content analysis</li>
+                        <li>Smart recommendations</li>
+                        <li>Integration with Red Hat tools</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Active
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🔄</span>
+                    <h3 class="service-title">Release Syncing</h3>
+                    <p class="service-description">
+                        Automated release synchronization tool that keeps all release information consistent across platforms and teams.
+                    </p>
+                    <ul class="service-features">
+                        <li>Cross-platform release tracking</li>
+                        <li>Automated version management</li>
+                        <li>Release note generation</li>
+                        <li>Stakeholder notifications</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Production
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🏷️</span>
+                    <h3 class="service-title">Rover Tag Syncing</h3>
+                    <p class="service-description">
+                        Rover-based tag synchronization system that maintains consistent tagging and labeling across all connected repositories and projects.
+                    </p>
+                    <ul class="service-features">
+                        <li>Automated tag propagation</li>
+                        <li>Cross-repo synchronization</li>
+                        <li>Tag validation & cleanup</li>
+                        <li>Version consistency checks</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Active
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">📈</span>
+                    <h3 class="service-title">PX Prio</h3>
+                    <p class="service-description">
+                        Product Experience Priority management tool for tracking and managing customer-facing priority issues and feature requests.
+                    </p>
+                    <ul class="service-features">
+                        <li>Priority scoring algorithms</li>
+                        <li>Customer impact tracking</li>
+                        <li>Feature request management</li>
+                        <li>Executive dashboards</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Enhanced
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🔗</span>
+                    <h3 class="service-title">sync2jira</h3>
+                    <p class="service-description">
+                        Enhanced bidirectional synchronization tool that keeps JIRA issues in sync with external systems and now supports markdown conversion for Confluence integration.
+                    </p>
+                    <ul class="service-features">
+                        <li>Bidirectional JIRA sync</li>
+                        <li>Markdown to Confluence conversion</li>
+                        <li>Custom field mapping</li>
+                        <li>Real-time updates</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Enhanced
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🐛</span>
+                    <h3 class="service-title">Bugzilla Integration</h3>
+                    <p class="service-description">
+                        Comprehensive Bugzilla integration that synchronizes bug reports, tracks issue status, and maintains consistency with JIRA and other tracking systems.
+                    </p>
+                    <ul class="service-features">
+                        <li>Automated bug sync</li>
+                        <li>Status tracking</li>
+                        <li>Cross-platform bug management</li>
+                        <li>Custom field mapping</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Production
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">☁️</span>
+                    <h3 class="service-title">SFDC Integration</h3>
+                    <p class="service-description">
+                        Salesforce (SFDC) cloud integration that connects customer relationship management data with engineering workflows and support systems.
+                    </p>
+                    <ul class="service-features">
+                        <li>Customer data synchronization</li>
+                        <li>Support case integration</li>
+                        <li>Sales engineering workflows</li>
+                        <li>CRM data analytics</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Cloud Ready
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">💬</span>
+                    <h3 class="service-title">Slack Integration Suite</h3>
+                    <p class="service-description">
+                        Comprehensive Slack integration that enables seamless communication and workflow automation between Slack and all engineering tools.
+                    </p>
+                    <ul class="service-features">
+                        <li>Real-time notifications</li>
+                        <li>Interactive slash commands</li>
+                        <li>Workflow triggers</li>
+                        <li>Team collaboration tools</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Enhanced
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- App Store Tab -->
+        <div id="integrations" class="tab-content">
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <span class="service-icon">🏪</span>
+                    <h3 class="service-title">Engineering App Store</h3>
+                    <p class="service-description">
+                        App store or lab of useful things for production engineers and the rest of Red Hat teams.
+                    </p>
+                    <ul class="service-features">
+                        <li>Useful production tools</li>
+                        <li>Red Hat team resources</li>
+                        <li>Engineering utilities</li>
+                        <li>Internal tool catalog</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Beta Launch
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🎯</span>
+                    <h3 class="service-title">Single Application Service</h3>
+                    <p class="service-description">
+                        Single application service where people can find what we are offering and what are available with UI interface automation.
+                    </p>
+                    <ul class="service-features">
+                        <li>Service discovery interface</li>
+                        <li>Available service catalog</li>
+                        <li>UI interface automation</li>
+                        <li>Centralized service access</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        In Development
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <span class="service-icon">🔗</span>
+                    <h3 class="service-title">Integration Layer</h3>
+                    <p class="service-description">
+                        Integration layer that makes it incredibly easy to integrate with all of our platforms and tools.
+                    </p>
+                    <ul class="service-features">
+                        <li>Easy platform integration</li>
+                        <li>Universal tool connectivity</li>
+                        <li>Simplified integration process</li>
+                        <li>Cross-platform compatibility</li>
+                    </ul>
+                    <div class="service-status">
+                        <span class="status-dot"></span>
+                        Production Ready
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Floating AI Assistant -->
+    <div class="floating-ai-assistant" id="floatingAI" style="display: none;">
+        <div class="ai-header">
+            <div style="display: flex; align-items: center;" onclick="toggleAIAssistant()">
+                <div class="ai-avatar">🤖</div>
+                <div class="ai-info">
+                    <h4>AI Service Assistant</h4>
+                    <p>Ask about our services</p>
+                </div>
+            </div>
+            <div class="ai-controls">
+                <button class="control-btn" id="minimizeBtn" onclick="toggleAIAssistant()" title="Minimize/Maximize">−</button>
+                <button class="control-btn close-btn" onclick="closeAIAssistant()" title="Close">×</button>
+            </div>
+        </div>
+        
+        <div class="ai-messages" id="aiMessages">
+            <div class="ai-message">
+                👋 Hi! I'm your AI assistant. I can help you learn about our integration services. Try asking me about specific tools or services!
+            </div>
+        </div>
+        
+        <div class="ai-quick-actions">
+            <button class="ai-quick-btn" onclick="askAI('How do I integrate JIRA with Slack?')">JIRA + Slack</button>
+            <button class="ai-quick-btn" onclick="askAI('What is PX Prio?')">PX Prio</button>
+            <button class="ai-quick-btn" onclick="askAI('Show me AI services')">AI Services</button>
+            <button class="ai-quick-btn" onclick="askAI('Watson integration')">Watson</button>
+        </div>
+        
+        <div class="ai-input-container">
+            <div class="ai-input-wrapper">
+                <input type="text" class="ai-input" placeholder="Ask me about our services..." id="floatingAIInput">
+                <button class="ai-send-btn" onclick="sendFloatingAIMessage()">💬</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 AnTS-E - Automated Technical Support Enterprise. Empowering Red Hat teams through intelligent automation.</p>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        function showTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // AI Response simulation
+        function simulateAIResponse() {
+            const input = document.getElementById('aiInput');
+            const query = input.value.trim();
+            
+            if (!query) return;
+            
+            // Create response container
+            const responseDiv = document.createElement('div');
+            responseDiv.style.cssText = `
+                margin-top: 1rem;
+                padding: 1rem;
+                background: rgba(120, 53, 255, 0.1);
+                border: 1px solid rgba(120, 53, 255, 0.3);
+                border-radius: 12px;
+                color: #ffffff;
+            `;
+            
+            responseDiv.innerHTML = `
+                <strong>🤖 AI Assistant:</strong><br>
+                Great question! Our adaptive integration platform can seamlessly connect JIRA with Slack through our universal API connectors. Here's how:
+                <br><br>
+                1. <strong>Real-time sync:</strong> Automatically post JIRA updates to relevant Slack channels<br>
+                2. <strong>Smart notifications:</strong> AI-filtered alerts based on priority and team relevance<br>
+                3. <strong>Bidirectional flow:</strong> Create JIRA tickets directly from Slack conversations<br>
+                4. <strong>Custom workflows:</strong> Set up automated actions based on JIRA status changes
+                <br><br>
+                Would you like me to show you the setup process or demo a specific integration scenario?
+            `;
+            
+            document.querySelector('.chat-input-container').parentNode.appendChild(responseDiv);
+            input.value = '';
+        }
+
+        // Handle Enter key in AI input
+        document.getElementById('aiInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                simulateAIResponse();
+            }
+        });
+
+        // Active navigation highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // AI Assistant Functions
+        let aiIsMinimized = false;
+
+        function toggleAIAssistant() {
+            const floatingAI = document.getElementById('floatingAI');
+            const minimizeBtn = document.getElementById('minimizeBtn');
+            
+            aiIsMinimized = !aiIsMinimized;
+            
+            if (aiIsMinimized) {
+                floatingAI.classList.add('minimized');
+                minimizeBtn.textContent = '+';
+                minimizeBtn.title = 'Maximize';
+            } else {
+                floatingAI.classList.remove('minimized');
+                minimizeBtn.textContent = '−';
+                minimizeBtn.title = 'Minimize';
+            }
+        }
+
+        function closeAIAssistant() {
+            const floatingAI = document.getElementById('floatingAI');
+            floatingAI.style.display = 'none';
+        }
+
+        function showAIAssistant() {
+            const floatingAI = document.getElementById('floatingAI');
+            const minimizeBtn = document.getElementById('minimizeBtn');
+            
+            // Show the chatbot
+            floatingAI.style.display = 'flex';
+            
+            // If it's minimized, expand it
+            if (aiIsMinimized) {
+                floatingAI.classList.remove('minimized');
+                minimizeBtn.textContent = '−';
+                minimizeBtn.title = 'Minimize';
+                aiIsMinimized = false;
+            }
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('aiMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'ai-typing';
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = `
+                Looking for information...
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function addAIMessage(message) {
+            const messagesContainer = document.getElementById('aiMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'ai-message';
+            messageDiv.innerHTML = message;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function getServiceResponse(query) {
+            const lowerQuery = query.toLowerCase();
+            
+            // Pre-built responses for our services
+            const responses = {
+                'jira slack': `
+                    🔗 <strong>JIRA + Slack Integration:</strong><br><br>
+                    Here's how to integrate JIRA with Slack using our Universal Integration Engine:<br>
+                    1. Go to <strong>Tools & Integrations</strong> → <strong>Slack Integration Suite</strong><br>
+                    2. Enable real-time notifications for your JIRA projects<br>
+                    3. Set up interactive slash commands like /jira-status<br>
+                    4. Configure automated workflow triggers<br><br>
+                    <em>✨ Status: Enhanced and ready to use!</em>
+                `,
+                'px prio': `
+                    📈 <strong>PX Prio Service:</strong><br><br>
+                    Product Experience Priority management tool for tracking customer-facing issues:<br>
+                    • Priority scoring algorithms<br>
+                    • Customer impact tracking<br>
+                    • Feature request management<br>
+                    • Executive dashboards<br><br>
+                    <strong>Access:</strong> Tools & Integrations tab<br>
+                    <em>✨ Status: Enhanced</em>
+                `,
+                'ai services': `
+                    🤖 <strong>Our AI Services:</strong><br><br>
+                    1. <strong>AI Service Assistant</strong> (Beta) - Natural language service queries<br>
+                    2. <strong>Advanced Analytics & Reporting</strong> - Self-service data exploration<br>
+                    3. <strong>AI Service Desk Agent (Rovo)</strong> - Automated ticket handling<br>
+                    4. <strong>Snowflake Cortex AI Engine</strong> - Advanced AI processing<br><br>
+                    <strong>Location:</strong> AI & Intelligence + Support Systems tabs
+                `,
+                'watson': `
+                    🤖 <strong>Watson Integration:</strong><br><br>
+                    IBM Watson AI integration for Red Hat ecosystem:<br>
+                    • Natural language understanding<br>
+                    • Automated content analysis<br>
+                    • Smart recommendations<br>
+                    • Integration with Red Hat tools<br><br>
+                    <strong>Access:</strong> Tools & Integrations tab<br>
+                    <em>✨ Status: Active</em>
+                `,
+                'sync2jira': `
+                    🔗 <strong>sync2jira Tool:</strong><br><br>
+                    Enhanced bidirectional synchronization:<br>
+                    • Bidirectional JIRA sync<br>
+                    • Markdown to Confluence conversion<br>
+                    • Custom field mapping<br>
+                    • Real-time updates<br><br>
+                    <strong>New Feature:</strong> Now supports markdown conversion for Confluence!
+                `,
+                'bugzilla': `
+                    🐛 <strong>Bugzilla Integration:</strong><br><br>
+                    Comprehensive bug tracking integration:<br>
+                    • Automated bug sync<br>
+                    • Status tracking<br>
+                    • Cross-platform bug management<br>
+                    • Custom field mapping<br><br>
+                    <strong>Access:</strong> Tools & Integrations tab
+                `,
+                'snowflake': `
+                    ❄️ <strong>Snowflake Cortex AI Engine:</strong><br><br>
+                    Advanced AI processing platform:<br>
+                    • Natural language data queries<br>
+                    • Real-time AI processing<br>
+                    • Interactive Streamlit interface<br>
+                    • Enterprise-scale performance<br><br>
+                    <em>✨ Status: Beta Testing</em>
+                `,
+                'app store': `
+                    🏪 <strong>Engineering App Store:</strong><br><br>
+                    Curated marketplace for engineering tools:<br>
+                    • Curated tool marketplace<br>
+                    • Internal tool discovery<br>
+                    • One-click installation & setup<br>
+                    • User ratings & reviews<br><br>
+                    <strong>Access:</strong> User Experience tab
+                `,
+                'default': `
+                    🤔 I can help you with information about our services! Try asking about:<br><br>
+                    • <strong>Specific tools:</strong> "What is PX Prio?" or "Watson integration"<br>
+                    • <strong>Integrations:</strong> "How to integrate JIRA with Slack?"<br>
+                    • <strong>Service categories:</strong> "Show me AI services"<br>
+                    • <strong>Tools:</strong> "sync2jira", "Bugzilla", "Snowflake"<br><br>
+                    Or click the quick action buttons below!
+                `
+            };
+
+            // Find matching response
+            for (const [key, response] of Object.entries(responses)) {
+                if (key !== 'default' && lowerQuery.includes(key.replace(' ', ''))) {
+                    return response;
+                }
+            }
+
+            return responses.default;
+        }
+
+        function askAI(query) {
+            const input = document.getElementById('floatingAIInput');
+            input.value = query;
+            sendFloatingAIMessage();
+        }
+
+        function sendFloatingAIMessage() {
+            const input = document.getElementById('floatingAIInput');
+            const query = input.value.trim();
+            
+            if (!query) return;
+            
+            // Add user message
+            addAIMessage(`<strong>You:</strong> ${query}`);
+            
+            // Clear input
+            input.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Simulate AI thinking time
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = getServiceResponse(query);
+                addAIMessage(response);
+            }, 1500);
+        }
+
+        // Handle Enter key in floating AI input
+        document.addEventListener('DOMContentLoaded', function() {
+            const floatingInput = document.getElementById('floatingAIInput');
+            if (floatingInput) {
+                floatingInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendFloatingAIMessage();
+                    }
+                });
+            }
+        });
+
+
+
+        // Service card clicks - make all service cards clickable
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const serviceTitle = this.querySelector('.service-title').textContent.trim();
+                    const serviceDescription = this.querySelector('.service-description').textContent;
+                    
+                    // Debug logging
+                    console.log('Clicked service:', serviceTitle);
+                    
+                    // Visual feedback
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                    
+                    // Show service workflow page
+                    showServiceWorkflow(serviceTitle);
+                });
+                
+                // Add hover cursor and enhanced hover effect
+                card.style.cursor = 'pointer';
+                card.title = 'Click to learn more or access this service';
+            });
+        });
+
+
+
+        // Service Workflow Pages Function
+        function showServiceWorkflow(serviceTitle) {
+            // Hide main content
+            document.querySelector('.main-container').style.display = 'none';
+            
+            // Show or create workflow page
+            let workflowPage = document.getElementById('workflow-page');
+            if (!workflowPage) {
+                workflowPage = document.createElement('div');
+                workflowPage.id = 'workflow-page';
+                workflowPage.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: #000;
+                    z-index: 1000;
+                    overflow-y: auto;
+                    padding: 20px;
+                `;
+                document.body.appendChild(workflowPage);
+            }
+            
+            workflowPage.innerHTML = getWorkflowContent(serviceTitle);
+            workflowPage.style.display = 'block';
+        }
+
+        function hideServiceWorkflow() {
+            document.getElementById('workflow-page').style.display = 'none';
+            document.querySelector('.main-container').style.display = 'block';
+        }
+
+        function getWorkflowContent(serviceTitle) {
+            // Debug logging
+            console.log('Looking for workflow for:', serviceTitle);
+            
+            const workflows = {
+                'Snowflake Cortex AI': `
+                    <div style="max-width: 800px; margin: 0 auto; color: #f5f5f7;">
+                        <button onclick="hideServiceWorkflow()" style="background: #007AFF; color: white; border: none; padding: 10px 20px; border-radius: 8px; margin-bottom: 30px; cursor: pointer;">← Back to Services</button>
+                        <h1 style="font-size: 48px; margin-bottom: 20px;">❄️ Snowflake Cortex AI</h1>
+                        <p style="font-size: 20px; color: #a1a1a6; margin-bottom: 40px;">Chat with your data using natural language - ask questions and get insights without writing SQL.</p>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 30px; margin-bottom: 30px;">
+                            <h2 style="color: #007AFF; margin-bottom: 20px;">🚀 Get Started in 3 Steps</h2>
+                            
+                            <div style="margin-bottom: 30px;">
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">1. Upload Your Data</h3>
+                                <div style="background: rgba(0,122,255,0.1); border-radius: 8px; padding: 20px; border: 2px dashed #007AFF;">
+                                    <p style="margin-bottom: 15px;">Drag and drop your files here or click to browse</p>
+                                    <button style="background: #007AFF; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 16px;">Choose Files</button>
+                                    <p style="font-size: 14px; color: #a1a1a6; margin-top: 10px;">Supported: CSV, JSON, Excel, Parquet</p>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 30px;">
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">2. Connect to Snowflake</h3>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                    <input type="text" placeholder="Snowflake Account URL" style="width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                    <input type="text" placeholder="Username" style="width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                    <input type="password" placeholder="Password" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                    <button style="background: #34C759; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Test Connection</button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">3. Start Chatting with Your Data</h3>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                    <div style="background: #1a1a1a; border-radius: 8px; padding: 15px; margin-bottom: 15px; min-height: 200px; border: 1px solid #333;">
+                                        <p style="color: #a1a1a6;">Chat interface will appear here once connected...</p>
+                                    </div>
+                                    <input type="text" placeholder="Ask your data anything... e.g., 'Show me sales trends for the last quarter'" style="width: calc(100% - 80px); padding: 12px; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; color: white; margin-right: 10px;">
+                                    <button style="background: #007AFF; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer;">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px;">
+                            <h3 style="color: #f5f5f7; margin-bottom: 15px;">Example Questions You Can Ask:</h3>
+                            <ul style="color: #a1a1a6; line-height: 1.6;">
+                                <li>"What were our top performing products last month?"</li>
+                                <li>"Show me customer retention rates by region"</li>
+                                <li>"Create a chart of revenue trends over time"</li>
+                                <li>"Which team has the highest ticket resolution rate?"</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                
+                'AI Workflow Orchestrator': `
+                    <div style="max-width: 800px; margin: 0 auto; color: #f5f5f7;">
+                        <button onclick="hideServiceWorkflow()" style="background: #007AFF; color: white; border: none; padding: 10px 20px; border-radius: 8px; margin-bottom: 30px; cursor: pointer;">← Back to Services</button>
+                        <h1 style="font-size: 48px; margin-bottom: 20px;">🎯 AI Workflow Orchestrator</h1>
+                        <p style="font-size: 20px; color: #a1a1a6; margin-bottom: 40px;">Tell the platform what you want in plain English and it automatically sets up workflows across all your tools.</p>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 30px; margin-bottom: 30px;">
+                            <h2 style="color: #007AFF; margin-bottom: 20px;">🚀 Create Your First Workflow</h2>
+                            
+                            <div style="margin-bottom: 30px;">
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">1. Describe What You Want</h3>
+                                <textarea placeholder="Example: When a high-priority bug is created in JIRA, send an alert to Slack and assign it to the team lead" style="width: 100%; height: 100px; padding: 15px; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: white; font-family: inherit; resize: vertical;"></textarea>
+                                <button style="background: #007AFF; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin-top: 10px;">Analyze Request</button>
+                            </div>
+                            
+                            <div style="margin-bottom: 30px;">
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">2. Connect Your Tools</h3>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 15px; text-align: center;">
+                                        <div style="font-size: 24px; margin-bottom: 10px;">📊</div>
+                                        <p>JIRA</p>
+                                        <button style="background: #34C759; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 12px;">Connected</button>
+                                    </div>
+                                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 15px; text-align: center;">
+                                        <div style="font-size: 24px; margin-bottom: 10px;">💬</div>
+                                        <p>Slack</p>
+                                        <button style="background: #FF9500; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 12px;">Connect</button>
+                                    </div>
+                                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 15px; text-align: center;">
+                                        <div style="font-size: 24px; margin-bottom: 10px;">📧</div>
+                                        <p>Gmail</p>
+                                        <button style="background: #FF9500; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 12px;">Connect</button>
+                                    </div>
+                                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 15px; text-align: center;">
+                                        <div style="font-size: 24px; margin-bottom: 10px;">📚</div>
+                                        <p>Confluence</p>
+                                        <button style="background: #34C759; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 12px;">Connected</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">3. Review & Deploy</h3>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                    <p style="margin-bottom: 15px; color: #a1a1a6;">AI will generate the workflow based on your description:</p>
+                                    <div style="background: #1a1a1a; border-radius: 8px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #007AFF;">
+                                        <p style="color: #f5f5f7; font-weight: bold;">Proposed Workflow:</p>
+                                        <p style="color: #a1a1a6; margin-top: 10px;">1. Monitor JIRA for new issues with priority = "High"</p>
+                                        <p style="color: #a1a1a6;">2. Send Slack message to #engineering channel</p>
+                                        <p style="color: #a1a1a6;">3. Auto-assign to team lead based on component</p>
+                                        <p style="color: #a1a1a6;">4. Create calendar reminder for follow-up</p>
+                                    </div>
+                                    <button style="background: #34C759; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin-right: 10px;">Deploy Workflow</button>
+                                    <button style="background: rgba(255,255,255,0.1); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Edit Workflow</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px;">
+                            <h3 style="color: #f5f5f7; margin-bottom: 15px;">Popular Workflow Templates:</h3>
+                            <div style="display: grid; gap: 15px;">
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 15px; cursor: pointer;" onclick="alert('Template selected!')">
+                                    <p style="font-weight: bold;">📊 Weekly Status Reports</p>
+                                    <p style="color: #a1a1a6; font-size: 14px;">Auto-generate and send team status reports every Friday</p>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 15px; cursor: pointer;" onclick="alert('Template selected!')">
+                                    <p style="font-weight: bold;">🚨 Critical Issue Escalation</p>
+                                    <p style="color: #a1a1a6; font-size: 14px;">Auto-escalate critical bugs to management after 2 hours</p>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 15px; cursor: pointer;" onclick="alert('Template selected!')">
+                                    <p style="font-weight: bold;">🔄 Code Review Reminders</p>
+                                    <p style="color: #a1a1a6; font-size: 14px;">Send daily reminders for pending code reviews</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                
+                'Priority Management Platform': `
+                    <div style="max-width: 800px; margin: 0 auto; color: #f5f5f7;">
+                        <button onclick="hideServiceWorkflow()" style="background: #007AFF; color: white; border: none; padding: 10px 20px; border-radius: 8px; margin-bottom: 30px; cursor: pointer;">← Back to Services</button>
+                        <h1 style="font-size: 48px; margin-bottom: 20px;">📊 Priority Management Platform</h1>
+                        <p style="font-size: 20px; color: #a1a1a6; margin-bottom: 40px;">Automatically aggregates and ranks your daily tasks from JIRA, Slack, email, so you always know what to work on first.</p>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 30px; margin-bottom: 30px;">
+                            <h2 style="color: #007AFF; margin-bottom: 20px;">🚀 Set Up Your Priority Dashboard</h2>
+                            
+                            <div style="margin-bottom: 30px;">
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">1. Connect Your Work Tools</h3>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                        <h4 style="margin-bottom: 10px;">📊 JIRA Integration</h4>
+                                        <input type="text" placeholder="JIRA URL" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                        <input type="text" placeholder="API Token" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                        <button style="background: #007AFF; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; width: 100%;">Connect JIRA</button>
+                                    </div>
+                                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                        <h4 style="margin-bottom: 10px;">📧 Email Integration</h4>
+                                        <select style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                            <option>Gmail</option>
+                                            <option>Outlook</option>
+                                            <option>Exchange</option>
+                                        </select>
+                                        <button style="background: #007AFF; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; width: 100%;">Connect Email</button>
+                                    </div>
+                                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                        <h4 style="margin-bottom: 10px;">💬 Slack Integration</h4>
+                                        <input type="text" placeholder="Workspace URL" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                        <button style="background: #007AFF; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; width: 100%;">Connect Slack</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 30px;">
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">2. Configure Priority Rules</h3>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px;">High Priority Keywords:</label>
+                                        <input type="text" value="urgent, critical, blocker, production" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px;">Due Date Weight (%):</label>
+                                        <input type="range" min="0" max="100" value="40" style="width: 100%; margin-bottom: 5px;">
+                                        <span style="color: #a1a1a6;">40%</span>
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px;">Stakeholder Importance Weight (%):</label>
+                                        <input type="range" min="0" max="100" value="30" style="width: 100%; margin-bottom: 5px;">
+                                        <span style="color: #a1a1a6;">30%</span>
+                                    </div>
+                                    <button style="background: #34C759; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Save Priority Rules</button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">3. View Your Prioritized Tasks</h3>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                    <div style="background: #1a1a1a; border-radius: 8px; padding: 20px; min-height: 300px;">
+                                        <h4 style="color: #007AFF; margin-bottom: 20px;">📋 Today's Priority List</h4>
+                                        <div style="border-left: 4px solid #FF3B30; padding-left: 15px; margin-bottom: 15px;">
+                                            <p style="font-weight: bold; color: #FF3B30;">🚨 CRITICAL: Fix production login bug</p>
+                                            <p style="color: #a1a1a6; font-size: 14px;">JIRA-1234 • Due: Today • Assigned: You</p>
+                                        </div>
+                                        <div style="border-left: 4px solid #FF9500; padding-left: 15px; margin-bottom: 15px;">
+                                            <p style="font-weight: bold; color: #FF9500;">⚡ HIGH: Review security audit report</p>
+                                            <p style="color: #a1a1a6; font-size: 14px;">Email from CISO • Due: Tomorrow</p>
+                                        </div>
+                                        <div style="border-left: 4px solid #007AFF; padding-left: 15px; margin-bottom: 15px;">
+                                            <p style="font-weight: bold; color: #007AFF;">📊 MEDIUM: Update dashboard metrics</p>
+                                            <p style="color: #a1a1a6; font-size: 14px;">JIRA-1235 • Due: This week</p>
+                                        </div>
+                                        <div style="border-left: 4px solid #34C759; padding-left: 15px;">
+                                            <p style="font-weight: bold; color: #34C759;">📝 LOW: Documentation update</p>
+                                            <p style="color: #a1a1a6; font-size: 14px;">Confluence • Due: Next week</p>
+                                        </div>
+                                    </div>
+                                    <button style="background: #007AFF; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin-top: 15px;">Refresh Priority List</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px;">
+                            <h3 style="color: #f5f5f7; margin-bottom: 15px;">📈 Priority Insights</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; color: #007AFF; font-weight: bold;">23</div>
+                                    <p style="color: #a1a1a6;">Total Tasks</p>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; color: #FF3B30; font-weight: bold;">3</div>
+                                    <p style="color: #a1a1a6;">Critical</p>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; color: #34C759; font-weight: bold;">87%</div>
+                                    <p style="color: #a1a1a6;">On Track</p>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; color: #007AFF; font-weight: bold;">2.5h</div>
+                                    <p style="color: #a1a1a6;">Est. Time</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                
+                'PX Prio': `
+                    <div style="max-width: 800px; margin: 0 auto; color: #f5f5f7;">
+                        <button onclick="hideServiceWorkflow()" style="background: #007AFF; color: white; border: none; padding: 10px 20px; border-radius: 8px; margin-bottom: 30px; cursor: pointer;">← Back to Services</button>
+                        <h1 style="font-size: 48px; margin-bottom: 20px;">📈 PX Prio</h1>
+                        <p style="font-size: 20px; color: #a1a1a6; margin-bottom: 40px;">Tracks customer-facing priority issues and feature requests with smart scoring algorithms.</p>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 30px; margin-bottom: 30px;">
+                            <h2 style="color: #007AFF; margin-bottom: 20px;">🚀 Submit New Priority Request</h2>
+                            
+                            <div style="margin-bottom: 30px;">
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">1. Request Details</h3>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                    <input type="text" placeholder="Request Title" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                    <textarea placeholder="Detailed description of the request..." style="width: 100%; height: 100px; padding: 12px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; color: white; font-family: inherit; resize: vertical;"></textarea>
+                                    <select style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                        <option>Select Request Type</option>
+                                        <option>Bug Fix</option>
+                                        <option>Feature Request</option>
+                                        <option>Performance Issue</option>
+                                        <option>Security Concern</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 30px;">
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">2. Priority Assessment</h3>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px;">Customer Impact:</label>
+                                        <select style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                            <option>Low - Few users affected</option>
+                                            <option>Medium - Moderate user impact</option>
+                                            <option>High - Many users affected</option>
+                                            <option>Critical - All users affected</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px;">Business Value:</label>
+                                        <input type="range" min="1" max="10" value="5" style="width: 100%; margin-bottom: 5px;">
+                                        <span style="color: #a1a1a6;">5/10</span>
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px;">Effort Estimate:</label>
+                                        <select style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                            <option>Small (1-2 days)</option>
+                                            <option>Medium (1 week)</option>
+                                            <option>Large (2-4 weeks)</option>
+                                            <option>Extra Large (1+ months)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 30px;">
+                                <h3 style="color: #f5f5f7; margin-bottom: 15px;">3. Stakeholder Information</h3>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px;">
+                                    <input type="text" placeholder="Requesting Customer/Team" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                    <input type="email" placeholder="Contact Email" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                    <input type="date" placeholder="Desired Completion Date" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; color: white;">
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <button style="background: #34C759; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 16px; margin-right: 15px;">Submit Priority Request</button>
+                                <button style="background: rgba(255,255,255,0.1); color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 16px;">Save as Draft</button>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px;">
+                            <h3 style="color: #f5f5f7; margin-bottom: 15px;">📊 Current Priority Queue</h3>
+                            <div style="background: #1a1a1a; border-radius: 8px; padding: 20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; margin-bottom: 15px;">
+                                    <div>
+                                        <p style="font-weight: bold; color: #FF3B30;">Priority Score: 95</p>
+                                        <p style="color: #f5f5f7;">Fix authentication timeout issue</p>
+                                        <p style="color: #a1a1a6; font-size: 14px;">Enterprise Customer • Due: This week</p>
+                                    </div>
+                                    <span style="background: #FF3B30; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">CRITICAL</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; margin-bottom: 15px;">
+                                    <div>
+                                        <p style="font-weight: bold; color: #FF9500;">Priority Score: 78</p>
+                                        <p style="color: #f5f5f7;">Add dark mode support</p>
+                                        <p style="color: #a1a1a6; font-size: 14px;">Multiple Customers • Due: Next month</p>
+                                    </div>
+                                    <span style="background: #FF9500; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">HIGH</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px;">
+                                    <div>
+                                        <p style="font-weight: bold; color: #007AFF;">Priority Score: 52</p>
+                                        <p style="color: #f5f5f7;">Improve dashboard loading time</p>
+                                        <p style="color: #a1a1a6; font-size: 14px;">Internal Team • Due: Next quarter</p>
+                                    </div>
+                                    <span style="background: #007AFF; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">MEDIUM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            };
+            
+            // Try exact match first
+            if (workflows[serviceTitle]) {
+                return workflows[serviceTitle];
+            }
+            
+            // Try case-insensitive lookup for common variations
+            const normalizedTitle = serviceTitle.toLowerCase().trim();
+            const serviceMap = {
+                'px prio': 'PX Prio',
+                'pxprio': 'PX Prio',
+                'snowflake cortex ai': 'Snowflake Cortex AI',
+                'ai workflow orchestrator': 'AI Workflow Orchestrator',
+                'priority management platform': 'Priority Management Platform'
+            };
+            
+            const mappedTitle = serviceMap[normalizedTitle];
+            if (mappedTitle && workflows[mappedTitle]) {
+                return workflows[mappedTitle];
+            }
+            
+            console.log('No workflow found for:', serviceTitle, 'Available workflows:', Object.keys(workflows));
+            
+            return `
+                <div style="max-width: 800px; margin: 0 auto; color: #f5f5f7;">
+                    <button onclick="hideServiceWorkflow()" style="background: #007AFF; color: white; border: none; padding: 10px 20px; border-radius: 8px; margin-bottom: 30px; cursor: pointer;">← Back to Services</button>
+                    <h1 style="font-size: 48px; margin-bottom: 20px;">${serviceTitle}</h1>
+                    <p style="font-size: 20px; color: #a1a1a6; margin-bottom: 40px;">Workflow page for this service is being prepared.</p>
+                    
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 30px; text-align: center;">
+                        <h2 style="color: #007AFF; margin-bottom: 20px;">🚧 Coming Soon</h2>
+                        <p style="margin-bottom: 20px;">This service workflow is currently under development.</p>
+                        <button style="background: #007AFF; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Contact Support</button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
